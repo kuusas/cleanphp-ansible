@@ -1,0 +1,8 @@
+- hosts: all
+  vars:
+    redis_enablerepo: epel
+  roles:
+      - role: geerlingguy.repo-epel
+        become: true
+      - role: geerlingguy.redis
+        become: true
