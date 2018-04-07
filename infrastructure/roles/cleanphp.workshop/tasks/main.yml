@@ -1,0 +1,22 @@
+- name: SSH password authentication
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication yes" state=present
+  notify: restart sshd
+
+- name: SSH allow root access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin yes" state=present 
+  notify: restart sshd
+
+- name: Create sudoers
+  template:
+    src: sudoers.d.j2
+    dest: "/etc/sudoers.d/users"
+    mode: 0440
+    owner: root
+    group: root
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Creating main ssh user
+  user: name=root password="{{ ssh_user_password }}" comment="CleanPHP user" group=wheel state=present
+
+- name: Restart sshd
+  service: name=sshd state=restarted

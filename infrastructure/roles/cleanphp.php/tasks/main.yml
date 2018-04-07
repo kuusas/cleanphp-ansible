@@ -1,0 +1,8 @@
+- name: Get webtatic repository RPM
+  get_url: dest=/tmp/webtatic-release-latest.rpm url=https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
+- name: Install webtatic repository RPM
+  yum: name=/tmp/webtatic-release-latest.rpm state=installed
+
+- name: Remove webtatic repository RPM
+  file: path=/tmp/webtatic-release-latest.rpm state=absent

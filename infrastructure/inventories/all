@@ -1,0 +1,50 @@
+#[jenkins.cleanphp.lt]
+#167.99.249.247 ansible_user=root
+
+#[jenkins-00.cleanphp.lt]
+#139.59.135.156 ansible_user=root
+
+#[jenkins-00]
+#139.59.135.156 ansible_user=root
+
+[jenkins-01]
+46.101.234.176 ansible_user=root
+
+[jenkins-02]
+46.101.182.212 ansible_user=root
+
+[jenkins-03]
+207.154.199.210 ansible_user=root
+
+[jenkins-04]
+139.59.211.241 ansible_user=root
+
+[jenkins-05]
+207.154.208.14 ansible_user=root
+
+[jenkins-06]
+46.101.110.97 ansible_user=root
+
+[jenkins-07]
+207.154.210.101 ansible_user=root
+
+[jenkins-08]
+207.154.222.38 ansible_user=root
+
+[jenkins-09]
+46.101.105.186 ansible_user=root
+
+[jenkins-10]
+207.154.217.132 ansible_user=root
+
+[jenkins-11]
+207.154.203.178 ansible_user=root
+
+[jenkins-12]
+46.101.118.236 ansible_user=root
+
+[jenkins-13]
+207.154.200.57 ansible_user=root
+
+[jenkins-14]
+46.101.129.127 ansible_user=root

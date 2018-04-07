@@ -1,0 +1,8 @@
+[jenkins]
+167.99.249.247 ansible_user=root
+
+[database]
+167.99.249.247 ansible_user=root
+
+[web]
+167.99.249.247 ansible_user=root server_name=test.cleanphp.lt

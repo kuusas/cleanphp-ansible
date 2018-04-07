@@ -1,0 +1,35 @@
+# 
+# ansible-galaxy install geerlingguy.nginx
+# https://galaxy.ansible.com/geerlingguy/nginx/
+# 
+---
+- hosts: web
+  vars:
+    nginx_user: nginx
+    nginx_vhosts:
+      - listen: 80
+        server_name: "{{ server_name }}"
+        server_name_redirect: "www.{{ server_name }}"
+        root: "/var/www/{{ server_name }}/current"
+        index: "index.php index.html index.htm"
+        error_page: "500 502 503 504 /50x.html"
+        access_log: "/var/www/{{ server_name }}/logs/access.log"
+        error_log: "/var/www/{{ server_name }}/logs/error.log"
+        state: "present"
+        template: "{{ nginx_vhost_template }}"
+        filename: "{{ server_name }}.conf"
+        extra_parameters: |
+          location ~ \.php$ {
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass 127.0.0.1:9000;
+              fastcgi_index index.php;
+              fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+              
+              fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
+              fastcgi_param APP_ENV "prod";
+
+              include fastcgi_params;
+          }
+  roles:
+    - { role: cleanphp.nginx-folders }
+    - { role: geerlingguy.nginx }

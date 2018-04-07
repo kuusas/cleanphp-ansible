@@ -1,0 +1,7 @@
+- hosts: all
+  vars:
+    # python -c 'import crypt; print crypt.crypt("cleanphp", "$1$SomeSalt$")'
+    ssh_user_password: $1$SomeSalt$C4NbYzdmZVslYvEsDS3kq1
+  roles:
+    - role: cleanphp.workshop
+      become: true

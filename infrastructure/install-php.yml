@@ -1,0 +1,32 @@
+# 
+# ansible-galaxy install geerlingguy.php
+# https://galaxy.ansible.com/geerlingguy/php/
+# 
+---
+- hosts: web
+  vars:
+    php_webserver_daemon: nginx
+    php_enable_php_fpm: true
+    php_fpm_listen: "127.0.0.1:9000"
+    php_fpm_listen_allowed_clients: "127.0.0.1"
+    php_fpm_pm_max_children: 50
+    php_fpm_pm_start_servers: 5
+    php_fpm_pm_min_spare_servers: 5
+    php_fpm_pm_max_spare_servers: 5
+    php_enable_apc: false
+    php_opcache_enable: 0
+    php_packages:
+      - php72w
+      - php72w-cli
+      - php72w-common
+      - php72w-fpm
+      - php72w-pdo
+      - php72w-mysql
+      - php72w-xml
+      - php72w-mbstring
+      - php72w-intl
+      - php72w-bcmath
+
+  roles:
+    - { role: cleanphp.php }
+    - { role: geerlingguy.php }

@@ -1,0 +1,31 @@
+# 
+# ansible-galaxy install geerlingguy.jenkins
+# https://galaxy.ansible.com/geerlingguy/jenkins
+# 
+---
+- hosts: jenkins
+
+  vars:
+    jenkins_package_state: present # latest
+    jenkins_hostname: localhost
+    jenkins_http_port: 8080
+    jenkins_connection_retries: 5
+    jenkins_admin_username: admin
+    jenkins_admin_password: admin
+    github_user: cleanphplt
+    github_repo: cleanphp-workshop
+    # https://updates.jenkins-ci.org/download/plugins/
+    jenkins_plugins:
+      - blueocean
+      # - ghprb
+      - http_request
+      - job-dsl
+      - pipeline-utility-steps
+    java_packages:
+            - java-1.8.0-openjdk
+
+  roles:
+    - role: geerlingguy.jenkins
+      become: true
+    # - role: cleanphp.jenkins-job
+    #   become: true

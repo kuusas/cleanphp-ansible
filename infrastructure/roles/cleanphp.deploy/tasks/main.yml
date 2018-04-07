@@ -1,0 +1,45 @@
+---
+- name: Get date
+  shell: date '+%Y%m%d%H%M%S'
+  register: date
+
+- set_fact:
+    release_path: "{{project_path}}/releases/{{date.stdout}}"
+
+- name: Release path
+  debug: var=release_path
+
+- name: Create new release folder
+  file: dest={{release_path}} state=directory
+
+- name: Upload and extract artifact
+  unarchive: src={{artifact}} dest={{release_path}}
+
+- name: Remove existing logs dir
+  file: state=absent path={{release_path}}/var/log
+
+- name: Create symlink to logs dir
+  file: state=link src={{project_root}}/logs path={{release_path}}/var/log
+
+- name: Create symlinks to shared dirs
+  file: state=link src={{project_root}}/shared/{{item}} path={{release_path}}/{{item}}
+  with_items: "{{shared_dirs}}"
+
+- name: Create symlinks to shared files
+  file: state=link src={{project_root}}/shared/{{item}} path={{release_path}}/{{item}}
+  with_items: "{{shared_files}}"
+
+# Create missing folders
+- name: Warmup cache default
+  shell: "APP_ENV=prod {{release_path}}/bin/console cache:warmup"
+
+# - name: Run database schema migrations
+#   shell: "{{release_path}}/bin/console doctrine:migrations:migrate --no-interaction --query-time"
+#   register: migrations_result
+#   when: migrations_exists.stat.exists == True
+
+- debug:
+    var: migrations_result.stdout_lines
+
+- name: Switch version
+  file: state=link src={{release_path}} path={{project_root}}/current

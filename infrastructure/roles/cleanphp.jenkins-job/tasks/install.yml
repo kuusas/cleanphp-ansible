@@ -1,0 +1,27 @@
+- name: Get EPEL repository RPM
+  get_url: dest=/tmp/epel-release-latest.rpm url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+- name: Install EPEL repository RPM
+  yum: name=/tmp/epel-release-latest.rpm state=installed
+
+- name: Remove EPEL repository RPM
+  file: path=/tmp/epel-release-latest.rpm state=absent
+
+- name: Install python prerequisites
+  yum: name="{{item}}" state=present
+  with_items:
+    - python-setuptools
+    - python-devel
+    - libyaml-devel
+    - git
+    - curl
+    - python-pip
+    - python-yaml
+
+- name: Install jenkins job builder
+  shell: "pip install {{item}}"
+  with_items:
+    - pbr
+    - PyYAML
+    - python-jenkins
+    - jenkins-job-builder
