@@ -1,0 +1,13 @@
+# 
+# ansible-galaxy install geerlingguy.jenkins
+# https://galaxy.ansible.com/geerlingguy/jenkins
+# 
+---
+- hosts: all
+
+  tasks:
+    - name: Stop jenkins
+      service: name=jenkins state=stopped
+
+    - name: Start jenkins
+      service: name=jenkins state=started
