@@ -1,0 +1,12 @@
+- hosts: all
+  vars:
+    packages:
+      - nano
+      - wget
+  tasks:
+    - name: Install packages
+      yum: name="{{item}}" state=latest
+      with_items: "{{ packages }}"
+
+# Paleidimas
+#$ ansible-playbook mano.yml -i inventories/mano
