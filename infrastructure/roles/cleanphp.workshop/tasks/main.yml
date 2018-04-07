@@ -20,3 +20,12 @@
 
 - name: Restart sshd
   service: name=sshd state=restarted
+
+- name: Set Europe/Vilnius timezone
+  file: src=/usr/share/zoneinfo/Europe/Vilnius dest=/etc/localtime force=true state=link
+
+- name: Selinux permissive on
+  selinux: policy=targeted state=permissive
+
+- name: Set default environment variables
+  template: src=environment.j2 dest=/etc/environment
