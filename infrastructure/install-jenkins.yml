@@ -3,7 +3,7 @@
 # https://galaxy.ansible.com/geerlingguy/jenkins
 # 
 ---
-- hosts: jenkins
+- hosts: all
 
   vars:
     jenkins_package_state: present # latest
